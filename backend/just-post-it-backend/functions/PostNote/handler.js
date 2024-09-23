@@ -7,14 +7,14 @@ exports.hello = async (event) => {
   try {
     const body = JSON.parse(event.body)
     const id = uuidv4()
-    const date = new Date().toISOString()
+    const date = new Date().toISOString().split('T')[0];
     const data = await db.put({
       TableName: 'NoteManager',
       Item: {
         id: id,
         username: body.username,
         text: body.text,
-        createAt: date
+        createdAt: date
       }
     })
     return sendResponse({message: "Posted!"})

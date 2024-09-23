@@ -36,19 +36,19 @@ functions:
       - httpApi:
           path: /notes
           method: post
-  GetPost:
+  GetNote:
     handler: functions/GetNote/handler.hello
     events:
       - httpApi:
           path: /notes/{id}
           method: get
-  PutPost:
+  PutNote:
     handler: functions/PutNote/handler.hello
     events:
       - httpApi:
           path: /notes/{id}
           method: put
-  DeletePost:
+  DeleteNote:
     handler: functions/DeleteNote/handler.hello
     events:
       - httpApi:
