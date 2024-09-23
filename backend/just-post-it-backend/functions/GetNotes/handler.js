@@ -1,9 +1,18 @@
+const {sendResponse, sendError} = require('../../responses/handler')
+const {db} = require('../../services/db') 
+
 exports.hello = async (event) => {
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        message: "Go Serverless v4! Your function executed successfully!",
-      }),
-    };
+
+  try {
+    const data = await db.scan({
+      TableName: 'NoteManager',
+
+    });
+
+    return sendResponse(data.Items)
+  } catch (error) {
+    return sendError(500, error.message)
+  }
+
   };
   
