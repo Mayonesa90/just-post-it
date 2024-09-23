@@ -5,7 +5,6 @@ exports.hello = async (event) => {
 
   try {
     const username = event.pathParameters.user;
-    console.log(username);
     
     const checkParams = {
       TableName: 'NoteManager',
@@ -16,14 +15,12 @@ exports.hello = async (event) => {
     }
 
     const userNotes = await db.scan(checkParams)
-
-    if (!userNotes) {
+    
+    if (userNotes.Items.length === 0 ) {
       return sendError(404, "User not found")
     } 
-   
-    return sendResponse(userNotes.Items)
-    
-    
+
+  return sendResponse(userNotes.Items)
 
   } catch (error) {
     return sendError(500, error.message)
