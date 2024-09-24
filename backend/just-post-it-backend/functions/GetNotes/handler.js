@@ -12,7 +12,9 @@ exports.hello = async (event) => {
       return sendError(404, "Nothing here yet..")
     }
 
-    return sendResponse(data.Items)
+    const sortedData = data.Items.sort((a, b) => b.createdAt - a.createdAt);
+
+    return sendResponse(sortedData)
   } catch (error) {
     return sendError(500, error.message)
   }
