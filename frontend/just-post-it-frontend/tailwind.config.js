@@ -8,7 +8,8 @@ export default {
     extend: {
       fontFamily: {
         IBMPlexMono: ['IBM Plex Mono', 'monospace'],
-        PassionOne: ['Passion One', 'sans-serif']
+        PassionOne: ['Passion One', 'sans-serif'],
+        GochiHand: ['Gochi Hand', 'sans-serif']
       },
       boxShadow: {
         '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
