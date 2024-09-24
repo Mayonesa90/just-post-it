@@ -34,7 +34,7 @@ functions:
     handler: functions/PostNote/handler.hello
     events:
       - httpApi:
-          path: /notes
+          path: /notes/add-note
           method: post
   GetNote:
     handler: functions/GetNote/handler.hello

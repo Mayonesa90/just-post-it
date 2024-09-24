@@ -15,7 +15,7 @@ exports.hello = async (event) => {
       return sendError(404, "No users found")
     } 
 
-    const users = data.Items.map((user) => user.username)
+    const users = [...new Set(data.Items.map((user) => user.username))];
 
   return sendResponse(users)
 
