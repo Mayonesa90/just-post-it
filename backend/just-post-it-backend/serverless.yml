@@ -60,6 +60,13 @@ functions:
       - httpApi:
           path: /notes/users/{user}
           method: get
+  GetUsers:
+    handler: functions/GetUsers/handler.hello
+    events:
+      - httpApi:
+          path: /notes/users
+          method: get
+  
   
 
 resources:
