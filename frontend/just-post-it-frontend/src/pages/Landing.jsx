@@ -6,13 +6,11 @@ import SortUserIcon from '../assets/sort-user-icon.svg'
 import PostByDate from '../components/PostsByDate'
 import PostByUser from '../components/PostsByUser'
 
-
 export default function Landing(){
 
 const [sorting, setSorting] = useState('Date')
 const [usernames, setUsernames] = useState([])
 const [user, setUser] = useState('')
-console.log(user);
 
 function SortingUpdater(){
     if(sorting === 'Date'){
@@ -21,6 +19,7 @@ function SortingUpdater(){
         return <PostByUser user={user}/>
     }
 }
+
 
 useEffect(() => {
     try {
@@ -34,13 +33,13 @@ useEffect(() => {
         
         
     } catch (error) {
+        setUsernames('No users found')
         console.log(error)
     }
 }, [])
 
 function handleClick(event){
     const selectedUser = event.target.value;
-    console.log(selectedUser);
     setSorting('User')
     setUser(selectedUser)
     if(!selectedUser){
@@ -79,14 +78,15 @@ function handleClick(event){
                             <option value="">
                                 SORT BY USER
                             </option>
-                        {usernames.map((username, index) => (
+
+                        {usernames ? usernames.map((username, index) => (
                             <option 
                                 key={index} 
                                 value={username}
                             >
                                 {username}
                             </option>
-                        ))}
+                        )) : <option value="">No users found</option>}
                     </select>
                 </button>
                 
