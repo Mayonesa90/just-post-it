@@ -20,6 +20,15 @@ function SortingUpdater(){
     }
 }
 
+// function UnderlineDate(){
+//     if(sorting === 'Date')
+//     return <hr />
+// }
+
+// function UnderlineUser(){
+//     if(sorting === 'User')
+//     return <hr />
+// }
 
 useEffect(() => {
     try {
@@ -47,48 +56,66 @@ function handleClick(event){
     }
 }
 
+const BlurredLine = () => {
+    return (
+        <div className='relative'>
+            <hr className=' border-green-400 border-1 absolute w-full top-0 '/>
+            <hr className=' border-green-400 border-1 blur-sm absolute w-full top-0 '/>
+            <hr className=' border-green-400 border-2 blur-md absolute w-full top-0 '/>
+            <hr className=' border-green-400 border-2 blur-sm absolute w-full top-0'/>
+        </div>
+    );
+  };
+
 
     return(
         <div className="wrapper bg-emerald-200 min-h-screen">
             <header className="pt-16 pb-5">
                 <h1 className=" text-4xl text-center font-PassionOne ">JUST POST IT</h1>
                 <Link to='/notes/add-note'>
-                    <nav className=" absolute right-0 top-14 p-3 bg-green-400 flex gap-2  shadow-xl">
+                    <nav className=" absolute right-0 top-10 p-3 bg-green-400 flex gap-2  shadow-xl">
                         <img src={AddIcon} alt="" className='' />
-                        <p href="" className=' font-IBMPlexMono'>ADD NOTE</p>
+                        <p href="" className=' font-IBMPlexMono text-xs'>ADD NOTE</p>
                     </nav>
                 </Link>
 
             </header>
             <section className='max-w-sm mx-auto flex justify-evenly font-IBMPlexMono'>
-                <button
-                    onClick={() => setSorting('Date')} 
-                    className='flex items-center gap-2'>
-                        <img src={SortDateIcon} alt="" />
-                        SORT BY DATE
-                </button>
-                <button className='flex items-center gap-2'>
-                    <img src={SortUserIcon} alt="" />
-                    <select 
-                        name="username" 
-                        id="username" 
-                        className=' bg-transparent'
-                        onChange={handleClick}
-                    >
-                            <option value="">
-                                SORT BY USER
-                            </option>
+                <div>
+                    <button
+                        onClick={() => setSorting('Date')} 
+                        className='flex items-center gap-2'>
+                            <img src={SortDateIcon} alt="" />
+                            SORT BY DATE
+                    </button>
+                    {sorting === 'Date' ? <BlurredLine/> : <></>}
+                </div>
+                <div>
+                    <button className='flex items-center gap-2'>
+                        <img src={SortUserIcon} alt="" />
+                        <select 
+                            name="username" 
+                            id="username" 
+                            className=' bg-transparent'
+                            onChange={handleClick}
+                        >
+                                <option value="">
+                                    SORT BY USER
+                                </option>
 
-                        {usernames ? usernames.map((username, index) => (
-                            <option 
-                                key={index} 
-                                value={username}
-                            >
-                                {username}
-                            </option>
-                        )) : <option value="">No users found</option>}
-                    </select>
-                </button>
+                            {usernames ? usernames.map((username, index) => (
+                                <option 
+                                    key={index} 
+                                    value={username}
+                                >
+                                    {username}
+                                </option>
+                            )) : <option value="">No users found</option>}
+                        </select>
+                    </button>
+                    {sorting === 'User' ? <BlurredLine /> : <></>}
+                </div>
+               
                 
             </section>
             <SortingUpdater />

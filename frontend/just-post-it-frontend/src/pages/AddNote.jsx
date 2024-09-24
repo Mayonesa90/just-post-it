@@ -54,10 +54,11 @@ export default function PostByDate() {
                 >
                 </textarea>
                 <div className="flex justify-self-end mb-5 font-IBMPlexMono text-base p-2 shadow-inner max-w-fit bg-emerald-200 ">
-                    <img src={UserIcon} alt="" />
-                    <input size={15} ref={ref} onClick={handlePlaceholderClick} type="text" placeholder={placeholder} className="max-w-52 text-right bg-transparent"/>
+                    <img src={UserIcon} alt="" className=' mr-2' />
+                    <input size={15} ref={ref} onClick={handlePlaceholderClick} type="text" placeholder={placeholder} className="max-w-52 bg-transparent"/>
                 </div>
             </section>
+            <button className=' font-PassionOne text-4xl bg-green-400 px-4 pt-1 shadow-md absolute right-0 mt-8'>POST IT</button>
         </div>
     )
 }
