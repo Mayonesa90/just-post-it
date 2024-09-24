@@ -1,8 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        IBMPlexMono: ['IBM Plex Mono', 'monospace'],
+        PassionOne: ['Passion One', 'sans-serif']
+      },
+      boxShadow: {
+        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+      }
+    },
   },
   plugins: [],
 }
