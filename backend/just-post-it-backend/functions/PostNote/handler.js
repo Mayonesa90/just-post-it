@@ -7,7 +7,7 @@ exports.hello = async (event) => {
   try {
     const body = JSON.parse(event.body)
     const id = uuidv4()
-    const date = new Date().toISOString().split('T')[0];
+    const date = new Date().toISOString().replace('T', ' ').split('.')[0];;
     const data = await db.put({
       TableName: 'NotesManager',
       Item: {
