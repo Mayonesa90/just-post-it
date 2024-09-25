@@ -9,7 +9,7 @@ exports.hello = async (event) => {
     const id = uuidv4()
     const date = new Date().toISOString().split('T')[0];
     const data = await db.put({
-      TableName: 'NoteManager',
+      TableName: 'NotesManager',
       Item: {
         id: id,
         username: body.username,

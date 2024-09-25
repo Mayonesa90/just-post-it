@@ -7,7 +7,7 @@ exports.hello = async (event) => {
     const username = event.pathParameters.user;
     
     const checkParams = {
-      TableName: 'NoteManager',
+      TableName: 'NotesManager',
       FilterExpression: "username = :username",
       ExpressionAttributeValues: {
         ":username": username

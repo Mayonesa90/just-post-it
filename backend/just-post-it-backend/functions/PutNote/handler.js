@@ -8,7 +8,7 @@ exports.hello = async (event) => {
     const body = JSON.parse(event.body);
     
     const checkParams = {
-      TableName: 'NoteManager',
+      TableName: 'NotesManager',
       Key: {
         id: id
       }
@@ -23,7 +23,7 @@ exports.hello = async (event) => {
       const createdAt = prevNote.Item.createdAt
       const date = new Date().toISOString().split('T')[0];
       const data = await db.put({
-        TableName: 'NoteManager',
+        TableName: 'NotesManager',
         Item: {
           id: id,
           username: username,

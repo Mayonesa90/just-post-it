@@ -6,7 +6,7 @@ exports.hello = async (event) => {
   try {
     
     const checkParams = {
-      TableName: 'NoteManager',
+      TableName: 'NotesManager',
     }
 
     const data = await db.scan(checkParams)

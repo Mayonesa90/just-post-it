@@ -7,7 +7,7 @@ exports.hello = async (event) => {
     const id = event.pathParameters.id;
     
     const checkParams = {
-      TableName: 'NoteManager',
+      TableName: 'NotesManager',
       Key: {
         id: id
       }
@@ -19,7 +19,7 @@ exports.hello = async (event) => {
       return sendError(404, "Note not found")
     } else {
       await db.delete({
-        TableName: 'NoteManager',
+        TableName: 'NotesManager',
         Key: {
           id
         }

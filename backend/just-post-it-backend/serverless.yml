@@ -74,7 +74,7 @@ resources:
     FileManager:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: NoteManager
+        TableName: NotesManager
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
