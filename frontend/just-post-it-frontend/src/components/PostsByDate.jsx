@@ -23,15 +23,19 @@ export default function PostByDate() {
 
     return (
         <div>
-            <ul className='grid gap-7 mt-7'>
+            <ul className='grid gap-7 mt-7 max-w-80 mx-auto'>
                 {notes? notes.map(note => (
-                    <li key={note.id} onMouseEnter={() => setHoveringId(note.id)} onMouseLeave={() => setHoveringId(null)} className='bg-yellow-200 mx-auto w-80 shadow-lg min-h-36 grid content-between'>
-                        <p className=' font-GochiHand text-lg p-3'>{note.text}</p>
-                        <div className='right-1 bottom-1 p-3 text-right text-xs font-IBMPlexMono'>
-                            <p><strong>{note.username}</strong> {note.createdAt}</p>
-                            { note.updatedAt ? <p className=' text-blue-700'>Edited: {note.updatedAt}</p> : <></>}
-                            {hoveringId === note.id && <EditBtn id={note.id} />}      
-                        </div>
+                    <li key={note.id} 
+                        onMouseEnter={() => setHoveringId(note.id)} 
+                        onMouseLeave={() => setHoveringId(null)} 
+                        className='bg-yellow-200 mx-auto shadow-lg h-fit relative content-between min-w-80'>
+                            <p className=' font-GochiHand text-lg p-3 h-fit break-words max-w-80'>{note.text}</p>
+                            <div className='grid relative right-1 bottom-1 p-3 text-right text-xs font-IBMPlexMono'>
+                                <p><strong>{note.username}</strong> {note.createdAt}</p>
+                                { note.updatedAt ? <p className=' text-blue-700'>Edited: {note.updatedAt}</p> : <></>}
+                                
+                            </div>
+                            {hoveringId === note.id && <EditBtn id={note.id} />}  
                     </li>
                 )) : <NoNotes />}
             </ul>

@@ -62,7 +62,7 @@ const BlurredLine = () => {
             <header className="pt-16 pb-5">
                 <h1 className=" text-4xl text-center font-PassionOne ">JUST POST IT</h1>
                 <Link to='/notes/add-note'>
-                    <nav className=" absolute right-0 top-10 p-3 bg-green-400 flex gap-2  shadow-xl">
+                    <nav className=" absolute right-0 top-10 p-3 bg-green-400 hover:bg-green-600  hover:text-white flex gap-2  shadow-xl">
                         <img src={AddIcon} alt="" className='' />
                         <p href="" className=' font-IBMPlexMono text-xs'>ADD NOTE</p>
                     </nav>

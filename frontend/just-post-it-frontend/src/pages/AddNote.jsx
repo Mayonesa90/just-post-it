@@ -120,7 +120,7 @@ export default function AddNote() {
         <div className="wrapper bg-emerald-200 min-h-screen flex flex-col">
             <Link to="/">
                 <nav>
-                    <button className="bg-purple-300 p-3 font-IBMPlexMono text-xs mt-9 shadow-lg">﹤ BACK TO NOTES</button>
+                    <button className="bg-purple-300 hover:bg-purple-500 hover:text-white  p-3 font-IBMPlexMono text-xs mt-9 shadow-lg">﹤ BACK TO NOTES</button>
                 </nav>
             </Link>
             <form onSubmit={addNote} className='mt-20'>

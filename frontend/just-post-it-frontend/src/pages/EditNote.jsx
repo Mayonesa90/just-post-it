@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react
 import UserIcon from '../assets/user-icon.svg'
 import NotePostedMessage from '../components/NotePostedMessage'
 import NoEditsMessage from '../components/NoEditsMessage'
-
+import DeleteBtn from '../components/DeleteBtn'
 
 export default function EditNote() {
 
@@ -102,7 +102,8 @@ export default function EditNote() {
           } catch (error) {
             console.error('Error editing note:', error);
           }
-        } else if (!newText || !newUsername) { //If no new username OR no new text has been added a message shows
+        //If no new username OR no new text has been added a message shows
+        } else if (!newText || !newUsername) { 
           setShowMessage(true)
           console.log("No changes made")
         }
@@ -111,12 +112,16 @@ export default function EditNote() {
 
     return (
         <div className="wrapper bg-emerald-200 min-h-screen flex flex-col">
+          <div className='flex justify-between'>
             <Link to="/">
                 <nav>
-                    <button className="bg-purple-300 p-3 font-IBMPlexMono text-xs mt-9 shadow-lg">﹤ BACK TO NOTES</button>
+                    <button className=" bg-purple-300 hover:bg-purple-500 hover:text-white p-3 font-IBMPlexMono text-xs mt-9 shadow-lg">﹤ BACK TO NOTES</button>
                 </nav>
             </Link>
-            <form onSubmit={addNote} className='mt-20'>
+            <DeleteBtn />
+          </div>
+
+          <form onSubmit={addNote} className='mt-20'>
             <section className="grid max-w-96 mx-auto bg-yellow-200 font-GochiHand pt-6 ">
                 <textarea 
                     name="text" 
@@ -137,7 +142,7 @@ export default function EditNote() {
                       onChange={handleInputChange} 
                       className="max-w-52 bg-transparent"/>
                 </div>
-            </section>
+              </section>
             {newText ? 
               <button type='submit'  className=' font-PassionOne text-4xl bg-green-400 px-4 pt-1 shadow-md absolute right-0 mt-8'>
                     POST IT
@@ -148,7 +153,7 @@ export default function EditNote() {
               </button>
               }
 
-            </form>
+          </form>
             {showMessage && <NoEditsMessage />}
             {notePosted && <NotePostedMessage />}
         </div>
