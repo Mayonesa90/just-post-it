@@ -1,6 +1,8 @@
 import { useEffect,  useRef, useState  } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import UserIcon from '../assets/user-icon.svg'
+import NotePostedMessage from '../components/NotePostedMessage'
+import MustFillTextField from '../components/MustFillTextField'
 
 
 export default function PostByDate() {
@@ -8,6 +10,7 @@ export default function PostByDate() {
     //Placeholder functions
     const [placeholder, setPlaceholder] = useState("ENTER USERNAME")
 
+    //When clicked 
     function handlePlaceholderClick(){
         setPlaceholder("")
     }
@@ -43,56 +46,84 @@ export default function PostByDate() {
         text: "",
         username: ""
       })
+
+      const [textFilled, setTextFilled] = useState(false)
+      const [usernameFilled, setUsernameFilled] = useState(false)
+      const [showMessage, setShowMessage] = useState(false)
+      const [notePosted, setNotePosted] = useState(false)
       
       const handleInputChange = (event) => {
+        
         const { name, value } = event.target;
+
         setFormData({
           ...formData,
           [name]: value
         });
-      
-      };
-      
-      const addNote = async (event) => {
-
-        event.preventDefault();
-
-        try {
-          const response = await fetch('https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/add-note', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-          });
-          if (response.ok) {
-            console.log('Note added successfully');
-            // Optionally, you can redirect the user or perform additional actions
-          } else {
-            console.error('Failed to add note');
-          }
-        } catch (error) {
-          console.error('Error adding note:', error);
+  
+        if(name === "text" && value.length > 0){
+            setTextFilled(true)
+            if(usernameFilled){
+              setShowMessage(false)
+            } else {
+              setShowMessage(true)
+            }
+        } else if (name === "text" && value.length === 0){
+            setTextFilled(false)
+            setShowMessage(true)
         }
         
+
+        if(name === "username" && value.length > 0){
+          setUsernameFilled(true)
+          if (textFilled){
+            setShowMessage(false)
+          } else {
+            setShowMessage(true)
+          }
+        } else if (name === 'username' && value.length === 0) {
+          setUsernameFilled(false)
+          setShowMessage(true)
+        }
+
       };
 
-      function Submit(){
-        return  <button type='submit'  className=' font-PassionOne text-4xl bg-green-400 px-4 pt-1 shadow-md absolute right-0 mt-8'>
-                    POST IT
-                </button>
-    
-      }
+      const addNote = async (event) => {
+        event.preventDefault();
 
+        if(textFilled && usernameFilled){
+          try {
+            const response = await fetch('https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/add-note', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+            });
+            if (response.ok) {
+              console.log('Note added successfully');
+              setNotePosted(true)
+            } else {
+              console.error('Failed to add note');
+            }
+          } catch (error) {
+            console.error('Error adding note:', error);
+          }
+        } else {
+          setShowMessage(true)
+          console.log("Please fill in the missing field/s before submitting.")
+        }
+      }
+   
 
     return (
-        <div className="wrapper bg-emerald-200 min-h-screen">
+        <div className="wrapper bg-emerald-200 min-h-screen flex flex-col">
             <Link to="/">
                 <nav>
-                    <button className="bg-purple-300 p-3 font-IBMPlexMono text-xs mt-9 mb-20 shadow-lg">﹤ BACK TO NOTES</button>
+                    <button className="bg-purple-300 p-3 font-IBMPlexMono text-xs mt-9 shadow-lg">﹤ BACK TO NOTES</button>
                 </nav>
             </Link>
-            <form onSubmit={addNote}>
+            <form onSubmit={addNote} className='mt-20'>
             <section className="grid max-w-96 mx-auto bg-yellow-200 font-GochiHand pt-6 ">
                 <textarea 
                     name="text" 
@@ -116,10 +147,19 @@ export default function PostByDate() {
                       className="max-w-52 bg-transparent"/>
                 </div>
             </section>
-            <button type='submit'  className=' font-PassionOne text-4xl bg-green-400 px-4 pt-1 shadow-md absolute right-0 mt-8'>
+            {textFilled ? 
+              <button type='submit'  className=' font-PassionOne text-4xl bg-green-400 px-4 pt-1 shadow-md absolute right-0 mt-8'>
                     POST IT
               </button>
+              :
+              <button className=' font-PassionOne text-4xl bg-green-400 px-4 pt-1 shadow-md absolute right-0 mt-8'>
+                    POST IT
+              </button>
+              }
+
             </form>
+            {showMessage && <MustFillTextField />}
+            {notePosted && <NotePostedMessage />}
         </div>
     )
 }
