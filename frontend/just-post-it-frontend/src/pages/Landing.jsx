@@ -20,16 +20,6 @@ function SortingUpdater(){
     }
 }
 
-// function UnderlineDate(){
-//     if(sorting === 'Date')
-//     return <hr />
-// }
-
-// function UnderlineUser(){
-//     if(sorting === 'User')
-//     return <hr />
-// }
-
 useEffect(() => {
     try {
         const fetchUsers = async () => {
