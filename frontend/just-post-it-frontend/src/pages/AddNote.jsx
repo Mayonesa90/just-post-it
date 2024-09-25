@@ -5,7 +5,7 @@ import NotePostedMessage from '../components/NotePostedMessage'
 import MustFillTextField from '../components/MustFillTextField'
 
 
-export default function PostByDate() {
+export default function AddNote() {
 
     //Placeholder functions
     const [placeholder, setPlaceholder] = useState("ENTER USERNAME")
