@@ -27,8 +27,11 @@ export default function PostByDate() {
                 {notes? notes.map(note => (
                     <li key={note.id} onMouseEnter={() => setHoveringId(note.id)} onMouseLeave={() => setHoveringId(null)} className='bg-yellow-200 mx-auto w-80 shadow-lg min-h-36 grid content-between'>
                         <p className=' font-GochiHand text-lg p-3'>{note.text}</p>
-                        <p className=' font-IBMPlexMono text-xs text-right right-1 bottom-1 p-3'>{note.username} {note.createdAt}</p>
-                        {hoveringId === note.id && <EditBtn id={note.id} />}
+                        <div className='right-1 bottom-1 p-3 text-right text-xs font-IBMPlexMono'>
+                            <p><strong>{note.username}</strong> {note.createdAt}</p>
+                            { note.updatedAt ? <p className=' text-blue-700'>Edited: {note.updatedAt}</p> : <></>}
+                            {hoveringId === note.id && <EditBtn id={note.id} />}      
+                        </div>
                     </li>
                 )) : <NoNotes />}
             </ul>

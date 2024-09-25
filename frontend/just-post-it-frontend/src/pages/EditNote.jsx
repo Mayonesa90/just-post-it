@@ -10,13 +10,12 @@ export default function EditNote() {
     const location = useLocation()
     const {id} = location.state
     const [note, setNote] = useState('')
-    const [placeholder, setPlaceholder] = useState('')
-    const [text, setText] = useState('')
     const [formData, setFormData] = useState({
         text: "",
         username: ""
       })
-
+    
+    //Fetch data from api using id and save in note
     useEffect(() => {
         const fetchNote = async () => {
            try { 
@@ -32,11 +31,9 @@ export default function EditNote() {
         fetchNote()
     }, [])
  
-    
+    //Set formData to data fetched from api
     useEffect(() => {
         if(note){
-            setPlaceholder(note.username)
-            setText(note.text)
             setFormData({
                 text: note.text,
                 username: note.username
@@ -46,8 +43,6 @@ export default function EditNote() {
 
 
       //Form functions
-      const [textFilled, setTextFilled] = useState(false)
-      const [usernameFilled, setUsernameFilled] = useState(false)
       const [showMessage, setShowMessage] = useState(false)
       const [notePosted, setNotePosted] = useState(false)
       const [newText, setNewText] = useState(false)
@@ -56,7 +51,8 @@ export default function EditNote() {
       const handleInputChange = (event) => {
         
         const { name, value } = event.target;
-  
+        
+        //Check if there is a value in the text input field and if it's not the same as the data from the api
         if(name === "text" && value.length > 0 && value !== note.text){
               setNewText(true)
               setFormData({
@@ -64,14 +60,15 @@ export default function EditNote() {
               [name]: value
             });
             
+            //If no value is in the textfield a message component will show
             if(!newText){
               setShowMessage(true)
             } else {
               setShowMessage(false)
             }
-            
-        } 
+        }
 
+        //Check if there is a value in the username input field and if it's not the same as the data from the api
         if(name === "username" && value.length > 0 && value !== note.username){
               setNewUsername(true)
               setFormData({
@@ -82,9 +79,11 @@ export default function EditNote() {
         
       };
 
+      //Function to post the new data to the api
       const addNote = async (event) => {
         event.preventDefault();
-
+        
+        //Check if either new text OR new username has been entered
         if(newText || newUsername){ 
           try {
             const response = await fetch(`https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/${id}`, {
@@ -103,7 +102,7 @@ export default function EditNote() {
           } catch (error) {
             console.error('Error editing note:', error);
           }
-        } else {
+        } else if (!newText || !newUsername) { //If no new username OR no new text has been added a message shows
           setShowMessage(true)
           console.log("No changes made")
         }
@@ -139,7 +138,7 @@ export default function EditNote() {
                       className="max-w-52 bg-transparent"/>
                 </div>
             </section>
-            {textFilled ? 
+            {newText ? 
               <button type='submit'  className=' font-PassionOne text-4xl bg-green-400 px-4 pt-1 shadow-md absolute right-0 mt-8'>
                     POST IT
               </button>

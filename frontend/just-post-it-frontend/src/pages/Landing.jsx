@@ -26,7 +26,6 @@ useEffect(() => {
             const res = await fetch('https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/users')
             const data = await res.json()
             setUsernames(data.data)
-            console.log(data);
         }
         fetchUsers()
         
