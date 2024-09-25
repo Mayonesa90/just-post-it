@@ -26,7 +26,7 @@ exports.hello = async (event) => {
         TableName: 'NotesManager',
         Item: {
           id: id,
-          username: username,
+          username: body.username,
           text: body.text,
           createdAt: createdAt,
           updatedAt: date
