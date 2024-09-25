@@ -25,10 +25,10 @@ export default function PostByDate() {
         <div>
             <ul className='grid gap-7 mt-7'>
                 {notes? notes.map(note => (
-                    <li key={note.id} onMouseEnter={() => setHoveringId(note.id)} onMouseLeave={() => setHoveringId(null)} className='bg-yellow-200 mx-auto w-80 shadow-lg min-h-36 grid content-between hover:border-solid hover:border-blue-700 hover:border-2'>
+                    <li key={note.id} onMouseEnter={() => setHoveringId(note.id)} onMouseLeave={() => setHoveringId(null)} className='bg-yellow-200 mx-auto w-80 shadow-lg min-h-36 grid content-between'>
                         <p className=' font-GochiHand text-lg p-3'>{note.text}</p>
                         <p className=' font-IBMPlexMono text-xs text-right right-1 bottom-1 p-3'>{note.username} {note.createdAt}</p>
-                        {hoveringId === note.id && <EditBtn />}
+                        {hoveringId === note.id && <EditBtn id={note.id} />}
                     </li>
                 )) : <NoNotes />}
             </ul>
