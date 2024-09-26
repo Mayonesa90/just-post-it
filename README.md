@@ -25,4 +25,4 @@ You are to build a simple message board where users can post messages. It should
 - DynamoDB
 
 ### Installation and more information
-Check out the README-files in each directory ("frontend" and "backend") for further instructions and information.
+Check out the README-files in each directory ("frontend/just-post-it-frontend" and "backend/just-post-it-backend") for further instructions and information.
