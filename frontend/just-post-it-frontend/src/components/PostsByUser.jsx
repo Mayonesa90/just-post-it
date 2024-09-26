@@ -28,7 +28,7 @@ export default function PostsByUser({user}) {
                 onMouseEnter={() => setHoveringId(note.id)} 
                 onMouseLeave={() => setHoveringId(null)} 
                 className='bg-yellow-200 mx-auto shadow-lg relative content-between min-w-80'>
-                    <h1 className=' font-IBMPlexMono text-xs bg-orange-400 shadow-md w-fit p-2'>{note.username}:</h1>
+                    <h1 className=' font-IBMPlexMono text-xs bg-orange-400 shadow-md w-fit p-2'>{note.username}</h1>
                     <article className='font-Sunrise p-3 text-wrap'>
                         <p>{note.text}</p>
                     </article>

@@ -1,7 +1,6 @@
 import { useEffect, useState  } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom"
 import UserIcon from '../assets/user-icon.svg'
-import NotePostedMessage from '../components/NotePostedMessage'
 import DeleteBtn from '../components/DeleteBtn'
 import ErrorMessage from '../components/ErrorMessage'
 import SuccessMessage from '../components/SuccessMessage'
@@ -46,14 +45,13 @@ export default function EditNote() {
       //Form functions
       const [errorMsg, setErrorMsg] = useState("")
       const [showErrorMsg, setShowErrorMsg] = useState(false)
-      const [notePosted, setNotePosted] = useState(false)
       const [showSuccessMsg, setShowSuccessMsg] = useState(false)
       const [successMsg, setSuccessMsg] = useState("")
       const [newText, setNewText] = useState(false)
       const [newUsername, setNewUsername] = useState(false)
 
       const handleInputChange = (event) => {
-        
+        setShowSuccessMsg(false)
         const { name, value } = event.target;
         
         //Check if there is a value in the text input field and if it's not the same as the data from the api
@@ -105,19 +103,20 @@ export default function EditNote() {
             });
             if (response.ok) {
               console.log('Note edited successfully');
-              setNotePosted(true)
+              setShowSuccessMsg(true)
+              setSuccessMsg('Note edited successfully')
               setErrorMsg("")
               setShowErrorMsg(false)
             } else {
               const errorData = await response.json()
               const errorMessage = JSON.stringify(errorData.errorMessage[0])
-              setNotePosted(false)
+              setShowSuccessMsg(false)
               setErrorMsg(errorMessage)
               setShowErrorMsg(true)
               console.error('Failed to edit note');
             }
           } catch (error) {
-            setNotePosted(false)
+            setShowSuccessMsg(false)
             setErrorMsg('Error adding note')
             setShowErrorMsg(true)
             console.error('Error editing note:', error);
@@ -204,7 +203,7 @@ export default function EditNote() {
 
           </form>
             {showErrorMsg && <ErrorMessage errorMsg={errorMsg} />}
-            {notePosted && <NotePostedMessage />}
+            {/* {notePosted && <NotePostedMessage />} */}
             {showSuccessMsg && <SuccessMessage message={successMsg}/>}
         </div>
     )

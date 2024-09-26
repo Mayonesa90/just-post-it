@@ -1,9 +1,8 @@
 import { useEffect,  useRef, useState  } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import UserIcon from '../assets/user-icon.svg'
-import NotePostedMessage from '../components/NotePostedMessage'
 import ErrorMessage from '../components/ErrorMessage'
-
+import SuccessMessage from '../components/SuccessMessage'
 
 export default function AddNote() {
 
@@ -49,12 +48,13 @@ export default function AddNote() {
 
       const [textFilled, setTextFilled] = useState(false)
       const [usernameFilled, setUsernameFilled] = useState(false)
-      const [notePosted, setNotePosted] = useState(false)
       const [errorMsg, setErrorMsg] = useState()
       const [showErrorMsg, setShowErrorMsg] = useState(false)
+      const [successMsg, setSuccessMsg] = useState("")
+      const [showSuccessMsg, setShowSuccessMsg] = useState(false)
       
       const handleInputChange = (event) => {
-        setNotePosted(false)
+        setShowSuccessMsg(false)
         const { name, value } = event.target;
 
         //Check if there is a value in the text input field and if it's not the same as the data from the api
@@ -105,7 +105,8 @@ export default function AddNote() {
             });
             if (response.ok) {
               console.log('Note added successfully');
-              setNotePosted(true)
+              setShowSuccessMsg(true)
+              setSuccessMsg('Note added successfully')
               setShowErrorMsg(false)
             } else {
               const errorData = await response.json()
@@ -169,7 +170,7 @@ export default function AddNote() {
               }
 
             </form>
-            {notePosted && <NotePostedMessage />}
+            {showSuccessMsg && <SuccessMessage message={successMsg}/>}
             {showErrorMsg && <ErrorMessage errorMsg={errorMsg} />}
         </div>
     )

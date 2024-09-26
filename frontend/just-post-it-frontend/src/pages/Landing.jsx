@@ -6,12 +6,14 @@ import SortUserIcon from '../assets/sort-user-icon.svg'
 import PostByDate from '../components/PostsByDate'
 import PostByUser from '../components/PostsByUser'
 import BlurredLine from '../components/BlurredLine'
+import LoadingIcon from '../assets/loading-icon.svg'
 
 export default function Landing(){
 
     const [sorting, setSorting] = useState('Date')
     const [usernames, setUsernames] = useState([])
     const [user, setUser] = useState('')
+    const [loading, setLoading] = useState(true)
 
     function SortingUpdater(){
         if(sorting === 'Date'){
@@ -34,6 +36,8 @@ export default function Landing(){
         } catch (error) {
             setUsernames('No users found')
             console.log(error)
+        } finally {
+            setLoading(false)
         }
     }, [])
 
@@ -94,10 +98,15 @@ export default function Landing(){
                     </button>
                     {sorting === 'User' ? <BlurredLine /> : <></>}
                 </div>
-               
-                
             </section>
-            <SortingUpdater />
+            
+            {loading ? (
+                <div className="flex justify-center items-center h-64">
+                    <img src={LoadingIcon} alt="Loading..." className="w-16 h-16 animate-spin" />
+                </div>
+            ) : (
+                <SortingUpdater />
+            )}
         </div>
     )
 }
