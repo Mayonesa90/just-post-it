@@ -24,18 +24,21 @@ export default function PostsByUser({user}) {
         <div>
             <ul className='grid gap-7 mt-7'>
                 {notes? notes.map(note => (
-                                        <li key={note.id} 
-                                        onMouseEnter={() => setHoveringId(note.id)} 
-                                        onMouseLeave={() => setHoveringId(null)} 
-                                        className='bg-yellow-200 mx-auto shadow-lg h-fit relative content-between min-w-80'>
-                                            <p className=' font-GochiHand text-lg p-3 h-fit break-words max-w-80'>{note.text}</p>
-                                            <div className='grid relative right-1 bottom-1 p-3 text-right text-xs font-IBMPlexMono'>
-                                                <p><strong>{note.username}</strong> {note.createdAt}</p>
-                                                { note.updatedAt ? <p className=' text-blue-700'>Edited: {note.updatedAt}</p> : <></>}
-                                                
-                                            </div>
-                                            {hoveringId === note.id && <EditBtn id={note.id} />}  
-                                    </li>
+                <li key={note.id} 
+                onMouseEnter={() => setHoveringId(note.id)} 
+                onMouseLeave={() => setHoveringId(null)} 
+                className='bg-yellow-200 mx-auto shadow-lg relative content-between min-w-80'>
+                    <h1 className=' font-IBMPlexMono text-xs bg-orange-400 shadow-md w-fit p-2'>{note.username}:</h1>
+                    <article className='font-Sunrise p-3 text-wrap'>
+                        <p>{note.text}</p>
+                    </article>
+                    <footer className='grid relative right-1 bottom-1 p-3 text-right text-xs opacity-70 font-IBMPlexMono'>
+                        <p>Posted: {note.createdAt}</p>
+                        { note.updatedAt ? <p className=' text-blue-700'>Edited: {note.updatedAt}</p> : <></>}
+                        
+                    </footer>
+                    {hoveringId === note.id && <EditBtn id={note.id} />}  
+                </li>
                 )) : <NoNotes />}
             </ul>
         </div>

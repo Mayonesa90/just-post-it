@@ -29,14 +29,15 @@ export default function PostByDate() {
                         onMouseEnter={() => setHoveringId(note.id)} 
                         onMouseLeave={() => setHoveringId(null)} 
                         className='bg-yellow-200 mx-auto shadow-lg relative content-between min-w-80'>
-                            <article className='font-GochiHand p-3 text-wrap'>
-                                <p className=' '>{note.text}</p>
+                            <h1 className=' font-IBMPlexMono text-xs bg-orange-400 shadow-md w-fit p-2'>{note.username}:</h1>
+                            <article className='font-Sunrise p-3 text-wrap'>
+                                <p>{note.text}</p>
                             </article>
-                            <div className='grid relative right-1 bottom-1 p-3 text-right text-xs font-IBMPlexMono'>
-                                <p><strong>{note.username}</strong> {note.createdAt}</p>
+                            <footer className='grid relative right-1 bottom-1 p-3 text-right text-xs opacity-70 font-IBMPlexMono'>
+                                <p>Posted: {note.createdAt}</p>
                                 { note.updatedAt ? <p className=' text-blue-700'>Edited: {note.updatedAt}</p> : <></>}
                                 
-                            </div>
+                            </footer>
                             {hoveringId === note.id && <EditBtn id={note.id} />}  
                     </li>
                 )) : <NoNotes />}
