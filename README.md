@@ -3,7 +3,7 @@
 
 ## Instructions
 
-You are to build a simple message board where users can post messages. It should be possible to view all messages and post a new message by providing a username. See below for what a message should contain. You need to build both a frontend in React (other frameworks are also acceptable) and a serverless API in AWS. Your frontend should be “hosted” in an S3 bucket on AWS, and you should use your API for API requests.
+Build a simple message board where users can post messages. It should be possible to view all messages and post a new message by providing a username. You need to build both a frontend in React and a serverless API in AWS. Your frontend should be “hosted” in an S3 bucket on AWS, and you should use your API for API requests.
 
 ## Functional Requirements
 - It should be possible to **post a new message**
