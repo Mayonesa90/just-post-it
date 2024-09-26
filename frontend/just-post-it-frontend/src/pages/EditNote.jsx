@@ -4,6 +4,7 @@ import UserIcon from '../assets/user-icon.svg'
 import NotePostedMessage from '../components/NotePostedMessage'
 import DeleteBtn from '../components/DeleteBtn'
 import ErrorMessage from '../components/ErrorMessage'
+import SuccessMessage from '../components/SuccessMessage'
 
 export default function EditNote() {
 
@@ -46,6 +47,8 @@ export default function EditNote() {
       const [errorMsg, setErrorMsg] = useState("")
       const [showErrorMsg, setShowErrorMsg] = useState(false)
       const [notePosted, setNotePosted] = useState(false)
+      const [showSuccessMsg, setShowSuccessMsg] = useState(false)
+      const [successMsg, setSuccessMsg] = useState("")
       const [newText, setNewText] = useState(false)
       const [newUsername, setNewUsername] = useState(false)
 
@@ -129,7 +132,31 @@ export default function EditNote() {
           setShowErrorMsg(true)
         }
       }
-   
+      
+      const deleteNote = async () => {
+        
+        try {
+          const response = await fetch(`https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/${id}`, {
+            method: 'DELETE',
+          })
+          if (response.ok) {
+            setSuccessMsg('Note deleted successfully')
+            setShowSuccessMsg(true)
+            console.log('Note deleted successfully');
+          } else {
+            setShowSuccessMsg(false)
+            const errorData = await response.json()
+            const errorMessage = JSON.stringify(errorData.errorMessage)
+            setErrorMsg(errorMessage)
+            setShowErrorMsg(true)
+            
+            console.error('Failed to delete note');
+          }
+        } catch (error) {
+          setErrorMsg('Error deleting note')
+          setShowErrorMsg(true)
+          console.error('Error deleting note:', error);
+        }}
 
     return (
         <div className="wrapper bg-emerald-200 min-h-screen flex flex-col">
@@ -139,7 +166,7 @@ export default function EditNote() {
                     <button className=" bg-purple-300 hover:bg-purple-500 hover:text-white p-3 font-IBMPlexMono text-xs mt-9 shadow-lg">﹤ BACK TO NOTES</button>
                 </nav>
             </Link>
-            <DeleteBtn />
+            <DeleteBtn onClick={deleteNote}/>
           </div>
 
           <form onSubmit={addNote} className='mt-20 '>
@@ -178,6 +205,7 @@ export default function EditNote() {
           </form>
             {showErrorMsg && <ErrorMessage errorMsg={errorMsg} />}
             {notePosted && <NotePostedMessage />}
+            {showSuccessMsg && <SuccessMessage message={successMsg}/>}
         </div>
     )
 }
