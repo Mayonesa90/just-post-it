@@ -12,7 +12,7 @@ export default {
         Sunrise: ['Waiting for the Sunrise', 'cursive']
       },
       boxShadow: {
-        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+        'hardShadow': '10px 10px 5px 0px rgba(0, 0, 0, 0.75)',
       }
     },
   },
