@@ -54,38 +54,40 @@ export default function AddNote() {
       const [showErrorMsg, setShowErrorMsg] = useState(false)
       
       const handleInputChange = (event) => {
-        
+        setNotePosted(false)
         const { name, value } = event.target;
 
-        setFormData({
-          ...formData,
-          [name]: value
-        });
-  
-        if(name === "text" && value.length > 0){
-            setTextFilled(true)
-            if(usernameFilled){
-              setShowErrorMsg(false)
-            } else {
-              setErrorMsg
-            }
-        } else if (name === "text" && value.length === 0){
-            setTextFilled(false)
-            setShowErrorMsg(true)
-        }
-        
-
-        if(name === "username" && value.length > 0){
-          setUsernameFilled(true)
-          if (textFilled){
-            setShowErrorMsg(false)
-          } else {
-            setShowErrorMsg(true)
-          }
-        } else if (name === 'username' && value.length === 0) {
-          setUsernameFilled(false)
+        //Check if there is a value in the text input field and if it's not the same as the data from the api
+        if (name === "text" && value.length > 0){
+          setErrorMsg("")
+          setShowErrorMsg(false)
+          setTextFilled(true)
+          setFormData({
+                ...formData,
+                [name]: value
+              });
+        } else if (name === "text" && value.length === 0) {
+          setTextFilled(false)
+          setErrorMsg("Text field can't be empty")
           setShowErrorMsg(true)
-        }
+        } 
+
+        //Check if there is a value in the username input field and if it's not the same as the data from the api
+        if (name === "username" && value.length > 0){
+          setErrorMsg("")
+          setShowErrorMsg(false)
+          setUsernameFilled(true)
+          setFormData({
+                ...formData,
+                [name]: value
+              });
+        } else if (name === "username" && value.length === 0) {
+          setUsernameFilled(false)
+          setErrorMsg("Username field can't be empty")
+          setShowErrorMsg(true)
+        } 
+
+        
 
       };
 
@@ -104,15 +106,13 @@ export default function AddNote() {
             if (response.ok) {
               console.log('Note added successfully');
               setNotePosted(true)
-              setErrorMsg("")
               setShowErrorMsg(false)
             } else {
               const errorData = await response.json()
               const errorMessage = JSON.stringify(errorData.errorMessage[0])
               setErrorMsg(errorMessage)
               setShowErrorMsg(true)
-              console.log(errorMessage);
-              
+
             }
           } catch (error) {
             console.error('Error adding note:', error);
@@ -120,8 +120,7 @@ export default function AddNote() {
             setShowErrorMsg(true)
           }
         } else {
-          setShowMessage(true)
-          setErrorMsg("Please fill in the missing field/s before submittin")
+          setErrorMsg("Please fill in the missing field/s before submitting")
           setShowErrorMsg(true)
           console.log("Please fill in the missing field/s before submitting.")
         }
