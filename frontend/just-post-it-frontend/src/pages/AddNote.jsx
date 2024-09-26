@@ -2,7 +2,7 @@ import { useEffect,  useRef, useState  } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import UserIcon from '../assets/user-icon.svg'
 import NotePostedMessage from '../components/NotePostedMessage'
-import MustFillTextField from '../components/MustFillTextField'
+import ErrorMessage from '../components/ErrorMessage'
 
 
 export default function AddNote() {
@@ -49,8 +49,9 @@ export default function AddNote() {
 
       const [textFilled, setTextFilled] = useState(false)
       const [usernameFilled, setUsernameFilled] = useState(false)
-      const [showMessage, setShowMessage] = useState(false)
       const [notePosted, setNotePosted] = useState(false)
+      const [errorMsg, setErrorMsg] = useState()
+      const [showErrorMsg, setShowErrorMsg] = useState(false)
       
       const handleInputChange = (event) => {
         
@@ -64,26 +65,26 @@ export default function AddNote() {
         if(name === "text" && value.length > 0){
             setTextFilled(true)
             if(usernameFilled){
-              setShowMessage(false)
+              setShowErrorMsg(false)
             } else {
-              setShowMessage(true)
+              setErrorMsg
             }
         } else if (name === "text" && value.length === 0){
             setTextFilled(false)
-            setShowMessage(true)
+            setShowErrorMsg(true)
         }
         
 
         if(name === "username" && value.length > 0){
           setUsernameFilled(true)
           if (textFilled){
-            setShowMessage(false)
+            setShowErrorMsg(false)
           } else {
-            setShowMessage(true)
+            setShowErrorMsg(true)
           }
         } else if (name === 'username' && value.length === 0) {
           setUsernameFilled(false)
-          setShowMessage(true)
+          setShowErrorMsg(true)
         }
 
       };
@@ -103,14 +104,25 @@ export default function AddNote() {
             if (response.ok) {
               console.log('Note added successfully');
               setNotePosted(true)
+              setErrorMsg("")
+              setShowErrorMsg(false)
             } else {
-              console.error('Failed to add note');
+              const errorData = await response.json()
+              const errorMessage = JSON.stringify(errorData.errorMessage[0])
+              setErrorMsg(errorMessage)
+              setShowErrorMsg(true)
+              console.log(errorMessage);
+              
             }
           } catch (error) {
             console.error('Error adding note:', error);
+            setErrorMsg("Error adding note")
+            setShowErrorMsg(true)
           }
         } else {
           setShowMessage(true)
+          setErrorMsg("Please fill in the missing field/s before submittin")
+          setShowErrorMsg(true)
           console.log("Please fill in the missing field/s before submitting.")
         }
       }
@@ -134,6 +146,7 @@ export default function AddNote() {
                         name="username" 
                         placeholder={placeholder}
                         onChange={handleInputChange} 
+                        onClick={handlePlaceholderClick}
                         className="max-w-52 bg-transparent p-1 "/>
                 </div>
                 <textarea 
@@ -141,7 +154,7 @@ export default function AddNote() {
                     id="text" 
                     placeholder="Write your text here.."
                     onChange={handleInputChange}
-                    className="bg-yellow-200 min-h-96 mx-9 p-1 tracking-wider"
+                    className="bg-yellow-200 min-h-96 mx-2 mb-2 p-1 tracking-wider"
                 >
                 </textarea>
                 
@@ -157,8 +170,8 @@ export default function AddNote() {
               }
 
             </form>
-            {showMessage && <MustFillTextField />}
             {notePosted && <NotePostedMessage />}
+            {showErrorMsg && <ErrorMessage errorMsg={errorMsg} />}
         </div>
     )
 }
