@@ -5,56 +5,46 @@ import SortDateIcon from '../assets/sort-date-icon.svg'
 import SortUserIcon from '../assets/sort-user-icon.svg'
 import PostByDate from '../components/PostsByDate'
 import PostByUser from '../components/PostsByUser'
+import BlurredLine from '../components/BlurredLine'
 
 export default function Landing(){
 
-const [sorting, setSorting] = useState('Date')
-const [usernames, setUsernames] = useState([])
-const [user, setUser] = useState('')
+    const [sorting, setSorting] = useState('Date')
+    const [usernames, setUsernames] = useState([])
+    const [user, setUser] = useState('')
 
-function SortingUpdater(){
-    if(sorting === 'Date'){
-        return <PostByDate />
-    }else if(sorting === 'User'){
-        return <PostByUser user={user}/>
-    }
-}
-
-useEffect(() => {
-    try {
-        const fetchUsers = async () => {
-            const res = await fetch('https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/users')
-            const data = await res.json()
-            setUsernames(data.data)
+    function SortingUpdater(){
+        if(sorting === 'Date'){
+            return <PostByDate />
+        }else if(sorting === 'User'){
+            return <PostByUser user={user}/>
         }
-        fetchUsers()
-        
-        
-    } catch (error) {
-        setUsernames('No users found')
-        console.log(error)
     }
-}, [])
 
-function handleClick(event){
-    const selectedUser = event.target.value;
-    setSorting('User')
-    setUser(selectedUser)
-    if(!selectedUser){
-        setSorting('Date')
+    useEffect(() => {
+        try {
+            const fetchUsers = async () => {
+                const res = await fetch('https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/users')
+                const data = await res.json()
+                setUsernames(data.data)
+            }
+            fetchUsers()
+            
+            
+        } catch (error) {
+            setUsernames('No users found')
+            console.log(error)
+        }
+    }, [])
+
+    function handleClick(event){
+        const selectedUser = event.target.value;
+        setSorting('User')
+        setUser(selectedUser)
+        if(!selectedUser){
+            setSorting('Date')
+        }
     }
-}
-
-const BlurredLine = () => {
-    return (
-        <div className='relative'>
-            <hr className=' border-green-400 border-1 absolute w-full top-0 '/>
-            <hr className=' border-green-400 border-1 blur-sm absolute w-full top-0 '/>
-            <hr className=' border-green-400 border-2 blur-md absolute w-full top-0 '/>
-            <hr className=' border-green-400 border-2 blur-sm absolute w-full top-0'/>
-        </div>
-    );
-  };
 
 
     return(

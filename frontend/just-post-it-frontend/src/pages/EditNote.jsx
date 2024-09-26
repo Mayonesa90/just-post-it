@@ -1,4 +1,4 @@
-import { useEffect,  useRef, useState  } from 'react'
+import { useEffect, useState  } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom"
 import UserIcon from '../assets/user-icon.svg'
 import NotePostedMessage from '../components/NotePostedMessage'
@@ -121,27 +121,28 @@ export default function EditNote() {
             <DeleteBtn />
           </div>
 
-          <form onSubmit={addNote} className='mt-20'>
-            <section className="grid max-w-96 mx-auto bg-yellow-200 font-GochiHand pt-6 ">
+          <form onSubmit={addNote} className='mt-20 '>
+            <section className="grid max-w-96 mx-auto bg-yellow-200 font-Sunrise  pb-7">
+                <div className=' bg-orange-400 flex font-IBMPlexMono  items-center p-1 mb-2 max-w-fit text-xs '>
+                  <img src={UserIcon} alt="" className=' mx-1 h-4' />
+                  <input 
+                        size={15} 
+                        type="text"
+                        id="username"
+                        name="username" 
+                        defaultValue={note.username}
+                        onChange={handleInputChange} 
+                        className="max-w-52 bg-transparent p-1"/>
+                </div>
                 <textarea 
                     name="text" 
                     id="text"
                     defaultValue={note.text}
                     onChange={handleInputChange}
-                    className="bg-yellow-200 min-h-96 px-9 tracking-wider"
+                    className="bg-yellow-200 min-h-96 mx-9 p-1 tracking-wider "
                 >
                 </textarea>
-                <div className="flex justify-self-end mb-5 font-IBMPlexMono text-base p-2 shadow-inner max-w-fit bg-emerald-200 ">
-                    <img src={UserIcon} alt="" className=' mr-2' />
-                    <input 
-                      size={15} 
-                      type="text"
-                      id="username"
-                      name="username" 
-                      defaultValue={note.username}
-                      onChange={handleInputChange} 
-                      className="max-w-52 bg-transparent"/>
-                </div>
+                
               </section>
             {newText ? 
               <button type='submit'  className=' font-PassionOne text-4xl bg-green-400 px-4 pt-1 shadow-md absolute right-0 mt-8'>
