@@ -3,6 +3,7 @@
     "@aws-sdk/client-s3": "^3.651.1",
     "@aws-sdk/lib-dynamodb": "^3.651.1",
     "lambda-multipart-parser": "^1.0.1",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "validator": "^13.12.0"
   }
 }
