@@ -6,10 +6,10 @@
 Just Post It is an application where you can post and edit notes, it's a single-page application (SPA) built with React/Vite and styled with Tailwind CSS. It is deployed on AWS in an S3 bucket and accessible via a URL.
 
 ## Functional information
-    - You can **post** a new message
-    - You can **edit** any posted message
-	 - You can **view all** messages
-    - Messages can be *sorted* by **date** or **user**
+- You can **post** a new message
+- You can **edit** any posted message
+- You can **view all** messages
+- Messages can be **sorted** by **date** OR **user**
 
 ## Table of Contents
 
