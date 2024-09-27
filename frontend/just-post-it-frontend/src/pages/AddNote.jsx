@@ -6,16 +6,25 @@ import SuccessMessage from '../components/SuccessMessage'
 
 export default function AddNote() {
 
-    //Placeholder functions
+    //Placeholder functions so placeholder text changes when clicked inside
+    //and restored when clicked outside
     const [placeholder, setPlaceholder] = useState("ENTER USERNAME")
+    const [textPlaceHolder, setTextPlaceholder] = useState('Whats on your mind today?')
 
-    //When clicked 
+    //When clicked inside
     function handlePlaceholderClick(){
         setPlaceholder("")
     }
+    function handleTextPlaceholderClick(){
+        setTextPlaceholder("")
+    }
 
+    //When clicked outside
     function handlePlaceholderOutsideClick(){
         setPlaceholder("ENTER USERNAME")
+    }
+    function handleTextPlaceholderOutsideClick(){
+        setTextPlaceholder('Whats on your mind today?')
     }
 
     const useOutsideClick = (callback) => {
@@ -38,7 +47,8 @@ export default function AddNote() {
         return ref;
       };
     
-      const ref = useOutsideClick(handlePlaceholderOutsideClick);
+      const inputRef = useOutsideClick(handlePlaceholderOutsideClick);
+      const textInputRef = useOutsideClick(handleTextPlaceholderOutsideClick);
   
       //Form functions
       const [formData, setFormData] = useState({
@@ -140,6 +150,7 @@ export default function AddNote() {
                 <div className=' bg-orange-400 flex font-IBMPlexMono  items-center p-1 mb-2 max-w-fit text-xs '>
                   <img src={UserIcon} alt="" className=' mx-1 h-4' />
                   <input 
+                        ref={inputRef}
                         size={15} 
                         type="text"
                         id="username"
@@ -147,24 +158,26 @@ export default function AddNote() {
                         placeholder={placeholder}
                         onChange={handleInputChange} 
                         onClick={handlePlaceholderClick}
-                        className="max-w-52 bg-transparent p-1 "/>
+                        className="max-w-52 bg-transparent p-1 placeholder:text-gray-800 "/>
                 </div>
-                <textarea 
+                <textarea
+                    ref={textInputRef} 
                     name="text" 
                     id="text" 
-                    placeholder="Write your text here.."
+                    placeholder={textPlaceHolder}
                     onChange={handleInputChange}
-                    className="bg-yellow-200 min-h-96 mx-2 mb-2 p-1 tracking-wider"
+                    onClick={handleTextPlaceholderClick}
+                    className="bg-yellow-200 placeholder:text-gray-800 min-h-96 mx-2 mb-2 p-1 tracking-wider"
                 >
                 </textarea>
                 
             </section>
             {textFilled ? 
-              <button type='submit'  className=' font-PassionOne text-4xl bg-green-400 hover:bg-green-600 px-4 pt-1 shadow-hardShadow absolute right-0 mt-8'>
+              <button type='submit'  className=' font-PassionOne text-4xl bg-green-400 hover:bg-green-600 hover:text-white px-4 pt-1 shadow-hardShadow absolute right-0 mt-8'>
                     POST IT
               </button>
               :
-              <button className=' font-PassionOne text-4xl bg-green-400 hover:bg-green-600 px-4 pt-1 shadow-hardShadow absolute right-0 mt-8'>
+              <button className=' font-PassionOne text-4xl bg-green-400 hover:bg-green-600 px-4 pt-1 hover:text-white shadow-hardShadow absolute right-0 mt-8'>
                     POST IT
               </button>
               }

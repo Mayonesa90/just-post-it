@@ -192,18 +192,17 @@ export default function EditNote() {
                 
               </section>
             {newText ? 
-              <button type='submit'  className=' font-PassionOne text-4xl bg-green-400 hover:bg-green-600 px-4 pt-1 shadow-hardShadow absolute right-0 mt-8'>
+              <button type='submit'  className=' font-PassionOne text-4xl bg-green-400 hover:bg-green-600 hover:text-white px-4 pt-1 shadow-hardShadow absolute right-0 mt-8'>
                     POST IT
               </button>
               :
-              <button className=' font-PassionOne text-4xl bg-green-400 px-4 pt-1 shadow-hardShadow absolute right-0 mt-8'>
+              <button className=' font-PassionOne text-4xl bg-green-400 hover:bg-green-600 px-4 pt-1 hover:text-white shadow-hardShadow absolute right-0 mt-8'>
                     POST IT
               </button>
               }
 
           </form>
             {showErrorMsg && <ErrorMessage errorMsg={errorMsg} />}
-            {/* {notePosted && <NotePostedMessage />} */}
             {showSuccessMsg && <SuccessMessage message={successMsg}/>}
         </div>
     )
