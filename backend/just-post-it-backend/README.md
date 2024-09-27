@@ -56,9 +56,8 @@ Follow these steps to create a local copy and run the project:
    ```bash
    sls deploy
 
-5. After deployment you should se similar:
-  ``
-endpoints:
+5. After deployment you should se similar endpoints
+  ```bash
   GET - https://XXXXXXXXXX.execute-api.eu-north-1.amazonaws.com/notes
   POST - https://XXXXXXXXXX.execute-api.eu-north-1.amazonaws.com/notes/add-note
   GET - https://XXXXXXXXXX.execute-api.eu-north-1.amazonaws.com/notes/{id}
@@ -74,7 +73,7 @@ functions:
   Delete: just-post-it-backend-dev-Delete (4.8 MB)
   GetUserNotes: just-post-it-backend-dev-GetUserNotes (4.8 MB)
   GetUsers: just-post-it-backend-dev-GetUsers (4.8 MB)
-  ``
+  ```
 
 ## Error handling
 
