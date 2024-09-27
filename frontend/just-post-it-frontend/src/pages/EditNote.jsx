@@ -15,14 +15,20 @@ export default function EditNote() {
           username: ""
         })
     
-      //Fetch data from api using id and save in note
       useEffect(() => {
           const fetchNote = async () => {
             try { 
                   const res = await fetch(`https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/${id}`)
                   const data = await res.json()
-                  
-                  setNote(data.data[0])
+                  console.log(data.errorMessage);
+                  if(data.errorMessage){
+                    setErrorMsg(data.errorMessage)
+                    setShowErrorMsg(true)
+                  } else {
+                    setNote(data.data[0])
+                  }
+  
+
               } catch (error) {
                   setNote('No users found')
                   console.log(error)
