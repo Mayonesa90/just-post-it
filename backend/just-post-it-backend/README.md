@@ -202,7 +202,7 @@ GET /notes/:user
     {
       "errorMessage": "No users found"
     }
-    ```
+  ```
 
   ### Posting a note 
   ```http
