@@ -119,9 +119,9 @@ GET /notes
   ```
 
   ### Get a specific note with dynamic url
-```http
+  ```http
   GET /notes/:id
-```
+  ```
 
   Response:
    ```json
@@ -148,7 +148,7 @@ GET /notes
 
   ### Get a specific user with dynamic url
 ```http
-  GET /notes/:user
+GET /notes/:user
 ```
 
   Response:
@@ -182,8 +182,9 @@ GET /notes
 
   ### Get all users
   ```http
-   GET /notes/users
+  GET /notes/users
   ```
+
   Response:
   ```json
    {
@@ -264,9 +265,10 @@ GET /notes
 
 
 ### Updating a note
-   ```http
-   PUT /notes/:id
-   ```
+```http
+PUT /notes/:id
+```
+
 Request syntax:
    ```json
    {
@@ -295,9 +297,9 @@ See error handling for input malfunctions under #posting-a-note
   
 
 ### Delete note:
-   ```http
-   DELETE /note/:id
-   ```
+```http
+DELETE /note/:id
+```
 
 Response if something is in cart:
    ```json
