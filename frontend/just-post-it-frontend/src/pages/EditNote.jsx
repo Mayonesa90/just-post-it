@@ -29,6 +29,7 @@ export default function EditNote() {
             try { 
                   const res = await fetch(`https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/${id}`)
                   const data = await res.json()
+                  console.log(data);
                   
                   //if the data is an error message it sets the error message text that
                   if(data.errorMessage){ 
@@ -36,7 +37,7 @@ export default function EditNote() {
                     setShowErrorMsg(true)
                   //if the data has a note it sets the note to that
                   } else {
-                    setNote(data.data[0]) 
+                    setNote(data.data) 
                     setShowErrorMsg(false)
                   }
               //if no data is returned it sets the error message to "No note found"
