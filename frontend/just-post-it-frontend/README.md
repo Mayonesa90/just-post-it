@@ -10,8 +10,6 @@ Just Post It is a single-page application (SPA) built with React and Vite that a
 4. [React Hooks](#react-hooks)
 5. [Installation and Running the Project](#installation-and-running-the-project)
 6. [Error Handling](#error-handling)
-7. [Deployment Information](#deployment-information)
-8. [Live Demo](#live-demo)
 
 ## Purpose
 Just Post It is designed as a simple note-posting platform where users can add, edit, and view notes.
@@ -73,9 +71,5 @@ Error handling is mainly done on the backend. The frontend displays error messag
 - Failed form submissions due to missing or invalid data (e.g., username less than 3 characters).
 - API request failures (e.g., network issues or server-side errors).
 
-## Deployment Information
-Details about AWS deployment...
 
-## Live Demo
-[Click here to access the live demo](http://just-post-it.s3-website.eu-north-1.amazonaws.com)
 
