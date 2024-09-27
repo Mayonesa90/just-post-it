@@ -333,7 +333,7 @@ If the input fails validation, the request will be rejected with an appropriate 
 
 To protect the system from harmful characters (such as those used in SQL injection, XSS, etc.), the server uses validator to escape any potentially dangerous content before it is posted to the database. Specifically:
 
-	•	Escaping Dangerous Characters: Any special characters that could be used for malicious purposes are sanitized to prevent attacks.
+- Escaping Dangerous Characters: Any special characters that could be used for malicious purposes are sanitized to prevent attacks.
 For example, if the input contains special HTML characters such as <, >, &, they will be safely encoded.
 
 ### Unescaping for Output
