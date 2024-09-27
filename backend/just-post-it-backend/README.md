@@ -5,10 +5,7 @@
 
 Just Post It (backend) is the server that provides the frontend with the required API-endpoints that connects with the DynamoDB-database. 
 
-- **Serverless framework**
-- **API Gateway**
-- **AWS Lambda**
-- **DynamoDB**
+The **Serverless Framework** is used to simplify the deployment and management of the backend services. **AWS API Gateway** handles the HTTP requests and routes them to **AWS Lambda functions**, which perform the logic and interact with the **DynamoDB database**. 
 
 ## Table of Contents
 
@@ -16,6 +13,7 @@ Just Post It (backend) is the server that provides the frontend with the require
 2. [Installation and Running the Project](#installation-and-running-the-project)
 3. [Error Handling](#error-handling)
 4. [Instructions](#instructions)
+5. [Security and Data Validation](#security-and-data-validation)
 
 ## API Endpoints
 
@@ -301,7 +299,7 @@ See error handling for input malfunctions under #posting-a-note
 DELETE /note/:id
 ```
 
-Response if something is in cart:
+Response:
    ```json
 {
 	"data": {
@@ -318,3 +316,28 @@ Response if something is in cart:
 }
    ```
 
+## Security and Data Validation
+
+To ensure the integrity and security of the data being stored, the server implements several validation and sanitization mechanisms using the validator package. These mechanisms prevent harmful data from being submitted to the database and ensure that the input conforms to expected formats.
+
+### Input Validation
+
+When users submit data (e.g., notes or usernames), the server runs a validation function before the data is processed or stored in the database. The following validation rules are enforced:
+
+- Username Validation: The username must be between 3 and 20 characters long and can only contain letters, numbers, and underscores.
+- Text Validation: The note text must be between 1 and 500 characters long.
+
+If the input fails validation, the request will be rejected with an appropriate error message, and the data will not be processed.
+
+### Input Sanitization
+
+To protect the system from harmful characters (such as those used in SQL injection, XSS, etc.), the server uses validator to escape any potentially dangerous content before it is posted to the database. Specifically:
+
+	•	Escaping Dangerous Characters: Any special characters that could be used for malicious purposes are sanitized to prevent attacks.
+For example, if the input contains special HTML characters such as <, >, &, they will be safely encoded.
+
+### Unescaping for Output
+
+When retrieving data from the database, the server applies a function to unescape the sanitized characters, ensuring that the content is displayed in its original form without exposing the system to vulnerabilities. This allows users to view their data exactly as they entered it, without introducing any risks.
+
+By implementing these validation and sanitization mechanisms, we ensure that the data being stored is both secure and reliable while preventing common web vulnerabilities.
