@@ -159,9 +159,9 @@ export default function EditNote() {
       //DELETE FUNCTION
       const deleteNote = async () => { 
         try {
-          const response = await fetch(`https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/${id}`, {
-            method: 'DELETE',
-          })
+            const response = await fetch(`https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/${id}`, {
+              method: 'DELETE',
+            })
           if (response.ok) {
             setSuccessMsg('Note deleted successfully')
             setShowSuccessMsg(true)
@@ -171,11 +171,12 @@ export default function EditNote() {
             const errorMessage = JSON.stringify(errorData.errorMessage)
             setErrorMsg(errorMessage)
             setShowErrorMsg(true)
+
           }
         } catch (error) {
-          setErrorMsg('Error deleting note')
-          setShowErrorMsg(true)
-          console.error('Error deleting note:', error);
+            setErrorMsg('Error deleting note')
+            setShowErrorMsg(true)
+            console.error('Error deleting note:', error);
         }}
 
     return (

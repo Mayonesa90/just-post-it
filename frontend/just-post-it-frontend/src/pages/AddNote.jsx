@@ -3,15 +3,25 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import UserIcon from '../assets/user-icon.svg'
 import ErrorMessage from '../components/ErrorMessage'
 import SuccessMessage from '../components/SuccessMessage'
+import useOutsideClick from '../helpers/useOutsideClick'
 
 export default function AddNote() {
 
-    //Placeholder functions so placeholder text changes when clicked inside
-    //and restored when clicked outside
     const [placeholder, setPlaceholder] = useState("ENTER USERNAME")
     const [textPlaceHolder, setTextPlaceholder] = useState('Whats on your mind today?')
+    const [textFilled, setTextFilled] = useState(false)
+    const [usernameFilled, setUsernameFilled] = useState(false)
+    const [errorMsg, setErrorMsg] = useState()
+    const [showErrorMsg, setShowErrorMsg] = useState(false)
+    const [successMsg, setSuccessMsg] = useState("")
+    const [showSuccessMsg, setShowSuccessMsg] = useState(false)
+    const inputRef = useOutsideClick(handlePlaceholderOutsideClick)
+    const textInputRef = useOutsideClick(handleTextPlaceholderOutsideClick)
 
-    //When clicked inside
+
+    //PLACEHOLDER FUNCTIONS
+
+    //When clicked inside it sets the placeholder to empty string
     function handlePlaceholderClick(){
         setPlaceholder("")
     }
@@ -19,63 +29,36 @@ export default function AddNote() {
         setTextPlaceholder("")
     }
 
-    //When clicked outside
+    //When clicked outside it resets placeholder text
     function handlePlaceholderOutsideClick(){
         setPlaceholder("ENTER USERNAME")
     }
     function handleTextPlaceholderOutsideClick(){
         setTextPlaceholder('Whats on your mind today?')
     }
+    
 
-    const useOutsideClick = (callback) => {
-        const ref = useRef();
-    
-        useEffect(() => {
-          const handleClickOutside = (event) => {
-            if (ref.current && !ref.current.contains(event.target)) {
-              callback();
-            }
-          };
-    
-          document.addEventListener("mousedown", handleClickOutside);
-    
-          return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-          };
-        }, [ref]);
-    
-        return ref;
-      };
-    
-      const inputRef = useOutsideClick(handlePlaceholderOutsideClick);
-      const textInputRef = useOutsideClick(handleTextPlaceholderOutsideClick);
-  
-      //Form functions
-      const [formData, setFormData] = useState({
-        text: "",
-        username: ""
-      })
+    //FORM FUNCTIONS
 
-      const [textFilled, setTextFilled] = useState(false)
-      const [usernameFilled, setUsernameFilled] = useState(false)
-      const [errorMsg, setErrorMsg] = useState()
-      const [showErrorMsg, setShowErrorMsg] = useState(false)
-      const [successMsg, setSuccessMsg] = useState("")
-      const [showSuccessMsg, setShowSuccessMsg] = useState(false)
-      
-      const handleInputChange = (event) => {
-        setShowSuccessMsg(false)
-        const { name, value } = event.target;
+    //Sets the formData to empty strings initially
+    const [formData, setFormData] = useState({
+      text: "",
+      username: ""
+    })
+ 
+    const handleInputChange = (event) => {
+      setShowSuccessMsg(false)
+      const { name, value } = event.target;
 
-        //Check if there is a value in the text input field and if it's not the same as the data from the api
-        if (name === "text" && value.length > 0){
-          setErrorMsg("")
-          setShowErrorMsg(false)
-          setTextFilled(true)
-          setFormData({
-                ...formData,
-                [name]: value
-              });
+      //Check if there is a value in the text input field and if it's not the same as the data from the api
+      if (name === "text" && value.length > 0){
+        setErrorMsg("")
+        setShowErrorMsg(false)
+        setTextFilled(true)
+        setFormData({
+              ...formData,
+              [name]: value
+            });
         } else if (name === "text" && value.length === 0) {
           setTextFilled(false)
           setErrorMsg("Text field can't be empty")
@@ -96,14 +79,14 @@ export default function AddNote() {
           setErrorMsg("Username field can't be empty")
           setShowErrorMsg(true)
         } 
-
-        
-
       };
 
+      //Function to add note to database
       const addNote = async (event) => {
+        
         event.preventDefault();
 
+        //Checks first if text AND username has been filled
         if(textFilled && usernameFilled){
           try {
             const response = await fetch('https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/add-note', {
@@ -114,7 +97,6 @@ export default function AddNote() {
               body: JSON.stringify(formData)
             });
             if (response.ok) {
-              console.log('Note added successfully');
               setShowSuccessMsg(true)
               setSuccessMsg('Note added successfully')
               setShowErrorMsg(false)
@@ -123,17 +105,15 @@ export default function AddNote() {
               const errorMessage = JSON.stringify(errorData.errorMessage[0])
               setErrorMsg(errorMessage)
               setShowErrorMsg(true)
-
             }
           } catch (error) {
-            console.error('Error adding note:', error);
             setErrorMsg("Error adding note")
             setShowErrorMsg(true)
           }
+        //If one of the two variables returns false an error message is shown
         } else {
           setErrorMsg("Please fill in the missing field/s before submitting")
           setShowErrorMsg(true)
-          console.log("Please fill in the missing field/s before submitting.")
         }
       }
    
