@@ -57,7 +57,7 @@ Follow these steps to create a local copy and run the project:
    sls deploy
 
 5. After deployment you should se similar endpoints
-  ```bash
+```bash
   GET - https://XXXXXXXXXX.execute-api.eu-north-1.amazonaws.com/notes
   POST - https://XXXXXXXXXX.execute-api.eu-north-1.amazonaws.com/notes/add-note
   GET - https://XXXXXXXXXX.execute-api.eu-north-1.amazonaws.com/notes/{id}
@@ -73,7 +73,7 @@ functions:
   Delete: just-post-it-backend-dev-Delete (4.8 MB)
   GetUserNotes: just-post-it-backend-dev-GetUserNotes (4.8 MB)
   GetUsers: just-post-it-backend-dev-GetUsers (4.8 MB)
-  ```
+```
 
 ## Error handling
 
@@ -85,10 +85,9 @@ Common errors and their handling mechanisms are as follows:
 
 ## Instructions
 ### Get all notes
-
-   ```http
-   GET /notes
-   ```
+```http
+GET /notes
+```
 
   Response:
    ```json
@@ -110,30 +109,92 @@ Common errors and their handling mechanisms are as follows:
   }
    ```
 
-  ### Error handling
+  #### Error handling
   **404 Not Found**: No notes in database
   Response:
-    ```json
-    {
-      "errorMessage": "Nothing here yet.."
-    }
-    ```
+  ```json
+      {
+        "errorMessage": "Nothing here yet.."
+      }
+  ```
 
-  ### Get all users
-   ```http
-   GET /notes/users
-   ```
+  ### Get a specific note with dynamic url
+```http
+  GET /notes/:id
+```
+
   Response:
    ```json
+   {
+	"data": [
+		{
+			"createdAt": "2024-09-27 09:33:18",
+			"text": "THEYRE EATING THE DOGS",
+			"username": "Trump",
+			"id": "d4a415c5-91e0-4528-b060-5a2acac97d76"
+		}
+	]
+}
+   ```
+
+  #### Error handling
+  **404 Not Found**: No note with that id
+  Response:
+  ```json
+{
+	"errorMessage": "Can't find any note with that id"
+}
+  ```
+
+  ### Get a specific user with dynamic url
+```http
+  GET /notes/:user
+```
+
+  Response:
+   ```json
+   {
+	"data": [
+		{
+			"createdAt": "2024-09-27 09:37:43",
+			"text": "THEYRE EATING THE CATS",
+			"username": "Trump",
+			"id": "2fc46b97-a475-4c85-9f36-35b72983491b"
+		},
+		{
+			"createdAt": "2024-09-27 09:36:53",
+			"text": "THEYRE EATING THE DOGS",
+			"username": "Trump",
+			"id": "fe8ace1e-de5c-456e-a12d-3a49f64eb116"
+		}
+	]
+}
+   ```
+
+  #### Error handling
+  **404 Not Found**: No user with that id
+  Response:
+  ```json
+{
+	"errorMessage": "User not found"
+}
+  ```
+
+  ### Get all users
+  ```http
+   GET /notes/users
+  ```
+  Response:
+  ```json
    {
 	"data": [
 		"Trump",
 		"ScoobyDoo"
 	]
   }
-   ```
+  ```
 
-  ### Error handling
+  #### Error handling
   **404 Not found**: No users in database
   Response:
     ```json
@@ -155,7 +216,7 @@ Common errors and their handling mechanisms are as follows:
     }
    ```
 
-Response:
+  Response:
    ```json
   {
 	"data": {
@@ -165,16 +226,15 @@ Response:
    ```
 
 
-   ### Error handling
-
+   #### Error handling
    **400 Bad request**: Username too short
    Request syntax:
   ```json
-  {
-    "username": "Sc",
-    "text": "WHAAAAA"
-  }
-   ```
+    {
+      "username": "Sc",
+      "text": "WHAAAAA"
+    }
+  ```
 
    Response:
    ```json
@@ -203,100 +263,56 @@ Response:
   ```
 
 
-### Changings a reservation
-Instructions: Here you need the `bookingId`and use it in the parapath parameter:
+### Updating a note
    ```http
-   PUT /bookings/:id
+   PUT /notes/:id
    ```
 Request syntax:
    ```json
    {
-  "guests": 1,
-  "numOfSingleRooms": 1,
-  "numOfDoubleRooms": 0,
-  "numOfSuiteRooms": 0,
-  "checkIn": "2024-09-13", //date cannot be after check-in 
-  "checkOut": "2024-09-19"
-  }
+	"username": "Trump",
+	"text": "Kamala is not black she's indian"
+}
    ```
 
 Response if changes were successful:
    ```json
 {
 	"data": {
-		"message": "Booking updated successfully.",
-		"updatedAttributes": {
-			"checkIn": "2024-09-13",
-			"numOfDoubleRooms": 0,
-			"totalPrice": 1000,
-			"guests": 1,
-			"checkOut": "2024-09-15",
-			"numOfSingleRooms": 1,
-			"rooms": [
-				"101"
-			],
-			"numOfSuiteRooms": 0
-		}
+		"message": "Updated!"
 	}
 }
 ```
 ### Error handling
+See error handling for input malfunctions under #posting-a-note
 
-   **404 Not found** - If bookingId does not exists in bookings table:
+   **404 Not found**: If id does not exists in database
    ```json
-   {
-	"errorMessage": "Booking not found."
+{
+	"errorMessage": "Note not found"
 }
    ```
-   **400 Bad request** - Too many guests per room: 
-   ```json
-   {
-	"errorMessage": "Number of guests exceeds the available number of beds."
-   }
-   ```
-   **400 Bad request** - Missing fields: 
-   ```json
-   {
-	"errorMessage": "Missing required fields in the request body."
-   }
-   ```
-   **500 Bad request** - Insufficient rooms:
-   ```json
-   {
-	"errorMessage": "Not enough available Suite rooms."
-   }
-   ```
+  
 
-### Delete reservation:
-Instructions: Here you need the `bookingId`and use it in the parapath parameter:
+### Delete note:
    ```http
-   DELETE /bookings/:id
+   DELETE /note/:id
    ```
 
 Response if something is in cart:
    ```json
-   {
-  "message": "Booking successfully deleted!"
-  }
+{
+	"data": {
+		"message": "Note deleted!"
+	}
+}
    ```
 
 ### Error handling
-
-**400 Bad request** - If todays date is less than two days before check-in
-   ```json
-   {
-	"errorMessage": {
-		"message": "Booking can only be cancelled up to 2 days before check-in date"
-	}
-   }
-   ```
-
-**404 Bad request** - If bookingId is incorrect
+**404 Bad request**: if id is not in database
    ```json
 {
-	"errorMessage": {
-		"message": "Booking not found"
-	}
+	"errorMessage": "Note not found"
 }
    ```
 
