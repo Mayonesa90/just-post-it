@@ -198,16 +198,16 @@ GET /notes/:user
   #### Error handling
   **404 Not found**: No users in database
   Response:
-    ```json
+  ```json
     {
       "errorMessage": "No users found"
     }
     ```
 
   ### Posting a note 
-   ```http
-   POST /notes
-   ```
+  ```http
+  POST /notes
+  ```
 
   Request syntax:
   ```json
