@@ -1,38 +1,46 @@
 # Just Post It - Individual Examination - Frontend
 
-
 ## Description
-
-Just Post It is an application where you can post and edit notes, it's a single-page application (SPA) built with React/Vite and styled with Tailwind CSS. It is deployed on AWS in an S3 bucket and accessible via a URL.
-
-## Functional information
-- You can **post** a new message
-- You can **edit** any posted message
-- You can **view all** messages
-- Messages can be **sorted** by **date** OR **user**
+Just Post It is a single-page application (SPA) built with React and Vite that allows users to post and edit notes. It is styled using Tailwind CSS and hosted on AWS using an S3 bucket. 
 
 ## Table of Contents
+1. [Purpose](#purpose)
+2. [Features](#features)
+3. [Screenshots](#screenshots)
+4. [React Hooks](#react-hooks)
+5. [Installation and Running the Project](#installation-and-running-the-project)
+6. [Error Handling](#error-handling)
+7. [Deployment Information](#deployment-information)
+8. [Live Demo](#live-demo)
 
-1. [Instructions](#instructions)
-2. [React Hooks](#react-hooks)
-3. [Installation and Running the Project](#installation-and-running-the-project)
-4. [Error Handling](#error-handling)
-5. [Live Demo](#live-demo)
+## Purpose
+Just Post It is designed as a simple note-posting platform where users can add, edit, and view notes.
 
-## Instructions
+## Features
+- Post a new note with a username and message.
+- Edit an existing note.
+- View all notes.
+- Sort notes by date or user.
 
-- **Landing Page:** The entry point of the application where you initially see all notes sorted by date but you can switch to sort them by user
-- **Add note Page:** Here you can add a new note if you provide a username with at least three characters and a text
-- **Edit note Page:** If you click the edit button on a note from the Landing Page you go to the edit page where you can make edits to the selected note
+## Screenshots
+![Landing Page](./src/assets/Screenshot-landing-page.png)
+![Add Note Page](./src/assets/Screenshot-add-note-page.png)
 
 ## React Hooks
-- **useEffect** is used synchronous operation (fetching data from the API) when the component mounts. It runs the fetch operation once, preventing unnecessary re-fetching and ensures the state is updated with the fetched data. It is used for fetching all the notes, the users notes and a single note when editing.
-- **useState** is used to manage different states like Success- and Error-messages and the text they should contain, placeholders, notes and form data.
+- **useEffect**: Handles asynchronous operations like data fetching when the component mounts or updates. Used to fetch:
+   - All notes (when the landing page loads).
+   - User-specific notes or single notes (for the edit feature).
+- **useState**: Manages component-level state, including:
+   - Notes data (fetched from the backend).
+   - Form data for posting and editing notes.
+   - UI state such as success and error messages.
 
 ## Installation and Running the Project
+Before running the project, ensure you have the following installed:
+- **Node.js**: [Download and install Node.js](https://nodejs.org/) if you don’t have it already.
+- **npm or yarn**: Make sure to have either npm (comes with Node.js) or yarn installed.
 
-Follow these steps to create a local copy and run the project:
-
+### Steps:
 1. **Clone the repository**:
    ```bash
    git clone git@github.com:Mayonesa90/just-post-it.git
@@ -49,10 +57,25 @@ Follow these steps to create a local copy and run the project:
    ```bash
    npm run dev
 
-## Error handling
+5.	Open the app in the browser:
+   By default, it should be running on http://localhost:3000
 
-Most error handling is handled from the backend. The frontend gets the error messages from the backend (mostly) and is displayed to the user via the frontend.
+## API Information
+The frontend communicates with the backend API to fetch, create, and update notes. Here are the main API endpoints:
+- `GET /notes`: Fetch all notes.
+- `POST /notes`: Create a new note.
+- `GET /notes/:id`: Fetch a specific note.
+- `PUT /notes/:id`: Update an existing note.
+- `DELETE /notes/:id`: Delete a note
 
+## Error Handling
+Error handling is mainly done on the backend. The frontend displays error messages from the backend using toast notifications or inline messages. Common error cases include:
+- Failed form submissions due to missing or invalid data (e.g., username less than 3 characters).
+- API request failures (e.g., network issues or server-side errors).
+
+## Deployment Information
+Details about AWS deployment...
 
 ## Live Demo
-http://just-post-it.s3-website.eu-north-1.amazonaws.com
+[Click here to access the live demo](http://just-post-it.s3-website.eu-north-1.amazonaws.com)
+
