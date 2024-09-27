@@ -33,7 +33,7 @@ exports.hello = async (event) => {
     console.log('unescapedData', unescapedData);
     
 
-    const sortedData = unescapedData.Items.sort((a, b) => {
+    const sortedData = unescapedData.sort((a, b) => {
       const dateA = new Date(a.createdAt);
       const dateB = new Date(b.createdAt);
       return dateB - dateA;  
