@@ -9,28 +9,39 @@ export default function EditNote() {
 
       const location = useLocation()
       const {id} = location.state
+      const [errorMsg, setErrorMsg] = useState("")
+      const [showErrorMsg, setShowErrorMsg] = useState(false)
+      const [showSuccessMsg, setShowSuccessMsg] = useState(false)
+      const [successMsg, setSuccessMsg] = useState("")
       const [note, setNote] = useState('')
       const [formData, setFormData] = useState({
           text: "",
           username: ""
         })
-    
+      const [newText, setNewText] = useState(false)
+      const [newUsername, setNewUsername] = useState(false)
+      
+      //FETCH API
+
+      //Fetch data from api using the id from the landing page
       useEffect(() => {
           const fetchNote = async () => {
             try { 
                   const res = await fetch(`https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/${id}`)
                   const data = await res.json()
-                  console.log(data.errorMessage);
-                  if(data.errorMessage){
+                  
+                  //if the data is an error message it sets the error message text that
+                  if(data.errorMessage){ 
                     setErrorMsg(data.errorMessage)
                     setShowErrorMsg(true)
+                  //if the data has a note it sets the note to that
                   } else {
-                    setNote(data.data[0])
+                    setNote(data.data[0]) 
+                    setShowErrorMsg(false)
                   }
-  
-
+              //if no data is returned it sets the error message to "No note found"
               } catch (error) {
-                  setNote('No users found')
+                  setNote('No note found')
                   console.log(error)
               }
           }
@@ -48,27 +59,30 @@ export default function EditNote() {
       }, [note])
 
 
-      //Form functions
-      const [errorMsg, setErrorMsg] = useState("")
-      const [showErrorMsg, setShowErrorMsg] = useState(false)
-      const [showSuccessMsg, setShowSuccessMsg] = useState(false)
-      const [successMsg, setSuccessMsg] = useState("")
-      const [newText, setNewText] = useState(false)
-      const [newUsername, setNewUsername] = useState(false)
+      //FORM FUNCTIONS
 
+      //Function to handle input change
       const handleInputChange = (event) => {
+
+        //Resets success-message
         setShowSuccessMsg(false)
+
+        //Gets the name and value from the form when function is triggered
         const { name, value } = event.target;
         
         //Check if there is a value in the text input field and if it's not the same as the data from the api
         if (name === "text" && value.length > 0 && value !== note.text){
+          //Resets possible error-message
           setErrorMsg("")
           setShowErrorMsg(false)
+          //Sets the newText to true so we know that a chnage has been made
           setNewText(true)
+          //Sets the form data to that value
           setFormData({
                 ...formData,
                 [name]: value
               });
+        //If you erase all the text from the text field an error message is shown
         } else if (name === "text" && value.length === 0) {
           setNewText(false)
           setErrorMsg("Text field can't be empty")
@@ -77,13 +91,17 @@ export default function EditNote() {
 
         //Check if there is a value in the username input field and if it's not the same as the data from the api
         if (name === "username" && value.length > 0 && value !== note.username){
+          //Resets possible error-message
           setErrorMsg("")
           setShowErrorMsg(false)
+          //Sets the newUsername to true so we know that a chnage has been made
           setNewUsername(true)
+          //Sets the form data to that value
           setFormData({
                 ...formData,
                 [name]: value
               });
+        //If you erase all the text from the username field an error message is shown
         } else if (name === "username" && value.length === 0) {
           setNewUsername(false)
           setErrorMsg("Username field can't be empty")
@@ -138,8 +156,8 @@ export default function EditNote() {
         }
       }
       
-      const deleteNote = async () => {
-        
+      //DELETE FUNCTION
+      const deleteNote = async () => { 
         try {
           const response = await fetch(`https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/${id}`, {
             method: 'DELETE',
@@ -147,15 +165,12 @@ export default function EditNote() {
           if (response.ok) {
             setSuccessMsg('Note deleted successfully')
             setShowSuccessMsg(true)
-            console.log('Note deleted successfully');
           } else {
             setShowSuccessMsg(false)
             const errorData = await response.json()
             const errorMessage = JSON.stringify(errorData.errorMessage)
             setErrorMsg(errorMessage)
             setShowErrorMsg(true)
-            
-            console.error('Failed to delete note');
           }
         } catch (error) {
           setErrorMsg('Error deleting note')
