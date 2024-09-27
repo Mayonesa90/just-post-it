@@ -47,7 +47,7 @@ Before running the project, ensure you have the following installed:
 
 2. Navigate to the project directory:
    ```bash
-   cd just-post-it
+   cd just-post-it/frontend/just-post-it-frontend
 
 3. Install dependencies:
    ```bash
