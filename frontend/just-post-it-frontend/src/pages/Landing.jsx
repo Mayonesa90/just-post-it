@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
-import AddIcon from '../assets/add-icon.svg'
 import SortDateIcon from '../assets/sort-date-icon.svg'
 import SortUserIcon from '../assets/sort-user-icon.svg'
 import PostByDate from '../components/PostsByDate'
@@ -15,32 +14,7 @@ export default function Landing(){
     const [user, setUser] = useState('')
     const [loading, setLoading] = useState(true)
 
-    function SortingUpdater(){
-        if(sorting === 'Date'){
-            return <PostByDate />
-        }else if(sorting === 'User'){
-            return <PostByUser user={user}/>
-        }
-    }
-
-    useEffect(() => {
-        try {
-            const fetchUsers = async () => {
-                const res = await fetch('https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/users')
-                const data = await res.json()
-                setUsernames(data.data)
-            }
-            fetchUsers()
-            
-            
-        } catch (error) {
-            setUsernames('No users found')
-            console.log(error)
-        } finally {
-            setLoading(false)
-        }
-    }, [])
-
+    //Click function so it knows which one is clicked
     function handleClick(event){
         const selectedUser = event.target.value;
         setSorting('User')
@@ -50,6 +24,30 @@ export default function Landing(){
         }
     }
 
+    //Function that returns the correct component based on the sorting state
+    function SortingUpdater(){
+        if(sorting === 'Date'){
+            return <PostByDate />
+        }else if(sorting === 'User'){
+            return <PostByUser user={user}/>
+        }
+    }
+
+    //Functions to fetch the users from the database
+    useEffect(() => {
+        try {
+            const fetchUsers = async () => {
+                const res = await fetch('https://4lrhfx9au9.execute-api.eu-north-1.amazonaws.com/notes/users')
+                const data = await res.json()
+                setUsernames(data.data)
+            }
+            fetchUsers()          
+        } catch (error) {
+            setUsernames('No users found') //If no users are found this text will be displayed instead
+        } finally {
+            setLoading(false)
+        }
+    }, [])
 
     return(
         <div className="wrapper bg-emerald-200 min-h-screen">
